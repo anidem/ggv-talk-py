@@ -1,0 +1,17 @@
+{
+  "name": "ggv-simple-chat",
+  "version": "0.0.1",
+  "description": "GGV Chat Server",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mustache": "^2.3.0",
+    "mustache-express": "^1.2.5",
+    "npm": "^5.8.0",
+    "request": "^2.85.0",
+    "socket.io": "^2.1.0"
+  },
+  "scripts": {
+    "start": "node server_app.js"
+  }
+}
