@@ -36,8 +36,8 @@ app.get('/ggvchat', function(req, res) {
 
 var request = require('request');
 
-slack_token = '';
-slack_ch_id = '';
+slack_token = process.env.SLACK_TOKEN;
+slack_ch_id = process.env.SLACK_CH_ID;
 params = {token: slack_token, channel: slack_ch_id};
 
 slack_test_url = 'https://slack.com/api/conversations.info';
