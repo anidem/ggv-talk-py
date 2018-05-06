@@ -1,0 +1,62 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" class="__meteor-css__" href="/ggvchat.css?">
+		
+
+	<title>ggv.chat</title>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="expires" content="-1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="fragment" content="!">
+	<meta name="distribution" content="global">
+	<meta name="rating" content="general">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+	<div class="livechat-room">		
+		<div>
+			<ul id="messages"></ul>
+			<div style="width:100%">
+			    <form id="msg_form" action="">
+			    	<input id="m" autocomplete="off" /><button>Send</button>
+			    </form>
+			</div>
+		</div>
+	</div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-1.11.1.js"></script>-->
+	<script src="/jquery-2.1.1.min.js"></script>
+    <script>
+		$(function() {
+			$username = "{{ chatuser }}";
+			$room = "{{ chatroom }}";
+			var socket = io();			
+
+			$(document).ready(function() {
+				alert("Joining " + $room + " as " + $username + " ...");
+				socket.emit('register', $username, $room);
+			});
+
+			/* FORM HANDLING ************************************************/
+			$("#msg_form").submit(function() {
+				// console.log(socket);
+				socket.emit("chat message", $("#m").val());
+				$("#m").val("");
+				return false;
+			});
+
+			// SOCKET EVENTS************************************************/ 
+			socket.on("user registered", function (data) {
+				var message = data.username + " now in " + data.room_id + " (" + data.socket_id + ")";
+				$("#messages").append($("<li>").text(message));
+			});
+
+			socket.on("chat message", function(msg) {
+				$("#messages").append($('<li>').text(msg));
+			});
+		});
+    </script>
+</body>
+</html>
